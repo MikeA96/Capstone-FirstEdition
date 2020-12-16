@@ -1,0 +1,8 @@
+@use "./styles/mixins" as *;
+@use "./styles/typography" as *;
+@use "./styles/colors.scss" as *;
+
+.App{
+    height:100%;
+    box-sizing:border-box;
+}

@@ -1,0 +1,45 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.userEdits{
+    display:flex;
+    flex-direction:column;
+    align-items:center;;
+    width:100%;
+    height:100%;
+    font-family:"Changa",sans-serif;
+    .userEdits__title{
+        color:$bright-teal;
+        font-size:30px;
+    }
+    .userEdits__success{
+        text-decoration:none;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        color:$dark-teal;
+        width:70%;
+        border-radius:8px;
+        text-align:center;
+        background-color:$light-black;
+        margin-bottom:15px;
+        @include tablet{
+            width:400px;
+        }
+        .userEdits__success--content{
+            color:$light-grey;
+        }
+    }
+    .userEdits__failure{
+        color:$light-grey;
+    }
+}
+.loginError{
+    display:flex;
+    width:100%;
+    text-align:center;
+    justify-content:center;
+    font-size:30px;
+    color:$bright-teal;
+    font-family:"Changa"sans-serif;
+}

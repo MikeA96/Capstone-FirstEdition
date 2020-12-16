@@ -1,0 +1,83 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.user{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-family:"Changa",sans-serif;
+    .user__title{
+        font-family:"Fugaz One";
+        color:$bright-teal;
+        margin:0;
+        margin-top:15px;
+        @include tablet{
+            font-size:60px;
+        }
+    }
+    .user__sub-title{
+        color:$light-grey;
+        font-size:20px;
+        @include tablet{
+            font-size:30px;
+        }
+    }
+    .user__content{
+        color:$light-grey;
+        margin:0;
+        margin-bottom:15px;
+        @include tablet{
+            font-size:20px;
+        }
+        
+    }
+    .user__story{
+        background-color:$light-black;
+        width: 300px;
+        border-radius:8px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        margin-top:15px;
+        @include tablet{
+            width:500px;
+        }
+        .user__story-container{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            .user__story--link{
+                text-decoration:none;
+                .user__story--title{
+                    color:$dark-teal;
+                    @include tablet{
+                        font-size:30px;
+                    }
+                }
+            }
+            .user__story--content{
+                color:$light-grey;
+                margin:0;
+                margin-bottom:5px;
+                @include tablet{
+                    font-size:20px;
+                }
+            }
+            
+        }
+    }
+    .user__story-info-container{
+        display:flex;
+        color:$light-grey;
+        .user__story--info{
+            margin:5px 5px;
+        }
+    }
+}
+.loginError{
+    display:flex;
+    justify-content:center;
+    font-size:30px;
+    color:$bright-teal;
+    font-family:"Changa"sans-serif;
+}

@@ -1,0 +1,102 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+
+.nav{
+    display:flex;
+    height:70px;
+    align-items:center;
+    background-color:$light-grey;
+    justify-content:space-between;
+    width:100%;
+    box-sizing:border-box;
+    @include tablet{
+        justify-content:flex-start;
+    }
+    
+    .nav__title{
+        font-family:"Fugaz One",cursive;
+        text-decoration:none;
+        color:$dark-teal;
+        padding-left:5px;
+        font-size:20px;
+        @include tablet{
+            font-size:40px;
+            padding-left:15px;
+            margin-right:20px;
+        }
+    }
+    .nav__parent-container{
+        padding-right:5px;
+        padding-left:5px;
+        @include tablet{
+            display:flex;
+            flex-direction:row-reverse;
+            width:100%;
+            justify-content:space-between;
+        }
+
+    .nav__form{
+        box-sizing:border-box;
+        display:flex;
+        width:100%;
+        margin:0;
+        align-items:center;
+        margin-top:5px;
+        @include tablet{
+            justify-content:flex-end;
+            width:200px;
+        }
+        @include desktop{
+            width:100%;
+        }
+        .nav__form-text{
+            box-sizing:border-box;
+            width:100%;
+            border-radius:3px;
+            height:20px;
+            @include tablet{
+                width:140px;
+            }
+            @include desktop{
+                width:250px;
+                height:30px;
+            }
+        }
+        .nav__form-button{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            width:50px;
+            border-radius:15px;
+            border:0;
+            background-color:$dark-black;
+            color:white;
+            @include desktop{
+                height:30px;
+            }
+
+        }
+    }
+    .nav__link-container{
+        display:flex;
+        @include tablet{
+            width:100%;
+        }
+    .nav__link{
+        margin:0;
+        text-decoration:none;
+        font-family:"Changa",sans-serif;
+        padding-right:5px;
+        color:$light-black;
+        font-size:12px;
+        @include tablet{
+            font-size:16px;
+        }
+        @include desktop{
+            font-size:20px;
+        }
+    }
+}
+ }
+}

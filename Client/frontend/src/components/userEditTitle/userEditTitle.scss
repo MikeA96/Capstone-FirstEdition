@@ -1,0 +1,41 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.userEditTitle{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-family:"Changa",sans-serif;
+    .userEditTitle__title{
+        color:$bright-teal;
+        text-align:center;
+        font-family:"Fugaz One",cursive;
+        @include tablet{
+            font-size:60px;
+        }
+    }
+    .userEditTitle__link{
+        text-decoration:none;
+        background-color:$light-black;
+        margin-bottom:15px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        color:$light-grey;
+        width:200px;
+        border-radius:8px;
+        font-size:22px;
+        @include tablet{
+            width:350px;
+        }
+    }
+}
+.loginError{
+    display:flex;
+    width:100%;
+    text-align:center;
+    justify-content:center;
+    font-size:30px;
+    color:$bright-teal;
+    font-family:"Changa"sans-serif;
+}

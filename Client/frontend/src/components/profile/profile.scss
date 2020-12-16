@@ -1,0 +1,122 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+
+.profile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-family:"Changa",sans-serif;
+    box-sizing:border-box;
+    height:100%;
+    width:100%;
+    .profile__title{
+        font-family:"Fugaz One",cursive;
+        color:$bright-teal;
+        font-size:40px;
+        margin:20px 0;
+        @include tablet{
+            font-size:60px;
+        }
+    }
+    .profile__sub-title{
+        color:$light-grey;
+        @include tablet{
+            font-size:30px;
+        }
+    }
+    .profile__content{
+        color:$light-grey;
+    }
+    .editProfile__button-link{
+        .editProfile__button{
+            border-radius:20px;
+            height:30px;
+            border:0;
+            background-color:$bright-teal
+
+        }
+
+    }
+    .profile__content-container{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        margin-bottom:40px;
+        width:100%;
+        @include tablet{
+            flex-direction:row;
+        }
+        .profile__story-container:nth-child(odd){
+            @include tablet{
+            margin-right:20px;
+            margin-left:21%;
+            }
+        }
+        .profile__story-container:nth-child(even){
+            @include tablet{
+            margin-right:21%;
+            }
+        }
+        .profile__story-container{
+            background-color:$light-black;
+            margin-top:25px;
+            width:30%;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            border-radius:8px;
+            height:100%;
+            @include tablet{
+                height:370px;
+            }
+            .profile__story-subcontainer{
+                display:flex;
+                align-items:center;
+                flex-direction:column;
+                text-align:center;
+                .profile__story-link{
+                    text-decoration:none;
+                .profile__story-title{
+                    text-align:center;
+                    color:$dark-teal;
+                    @include tablet{
+                        font-size:26px;
+                    }
+                }
+            }
+            .profile__content{
+                margin:5px 0;
+                color:$light-grey;
+            }
+            
+            }
+            .profile__info-container{
+                display:flex;
+                justify-content:center;
+                margin-bottom:10px;
+                .profile__info{
+                    margin:0 5px;
+                    color:$light-grey;
+                }
+            }
+        }
+    }
+    .profile__edits{
+        margin-bottom:15px;
+        .profile__edits-link{
+            text-decoration:none;
+            color:$bright-teal;
+        }
+    }
+}
+.loginError{
+    display:flex;
+    width:100%;
+    text-align:center;
+    justify-content:center;
+    font-size:30px;
+    color:$bright-teal;
+    font-family:"Changa"sans-serif;
+}

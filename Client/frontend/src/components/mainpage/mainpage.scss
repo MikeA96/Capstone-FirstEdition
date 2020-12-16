@@ -1,0 +1,58 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.mainPage{
+    box-sizing:border-box;
+    height:100%;
+    width:100%;
+    padding:0;
+    .mainPage__title{
+        font-family:"Fugaz One",cursive;
+        padding:20px 0;
+        border-radius:3px;
+        margin:0;
+        font-weight:900;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:$bright-teal;
+        @include tablet{
+            font-size:60px;
+        }
+        @include desktop{
+            font-size:80px;
+        }
+        .mainPage__title-img{
+            margin-left:10px;
+        }
+    }
+    .mainPage__link-container{
+        margin-top:30px;
+        display:flex;
+        justify-content:center;
+        font-family:'Changa',sans-serif;
+        .mainPage__link{
+            text-decoration:none;
+            color:$dark-teal;
+            margin:15px 20px;
+            font-size:20px;
+            @include tablet{
+                font-size:30px;
+            }
+        }
+        
+    }
+    .mainPage__link{
+        margin-top:30px;
+        display:flex;
+        align-items:center;
+        flex-direction:column;
+        font-family:"Changa";
+        text-decoration:none;
+        color:$dark-teal;
+        font-size:14px;
+        @include tablet{
+            font-size:20px;
+        }
+    }
+}

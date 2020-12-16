@@ -1,0 +1,22 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.singleEdit{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+.difference{
+    margin-top:30px;
+    background-color:#FFFFFF;
+    font-family:"Changa",sans-serif;
+    width:75%;
+    border-radius:8px;
+    ins{
+        color:green;
+    }
+    del{
+        text-decoration:line-through;
+        color:red;
+    }
+}
+}

@@ -1,0 +1,74 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.editProfile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    height:100%;
+    width:100%;
+    font-family:"Changa",sans-serif;
+    padding:0 20px;
+    box-sizing:border-box;
+    background-color:$dark-black;
+    .editProfile__title{
+        font-size:30px;
+        font-family:"Fugaz One",cursive;
+        color:$bright-teal;
+        margin:0;
+        margin-top:15px;
+        @include tablet{
+           font-size:60px; 
+        }
+    }
+    .editProfile__subtitle{
+        font-size:18px;
+        color:$light-grey;
+        @include tablet{
+            font-size:35px;
+        }
+    }
+    .editProfile__form{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        width:100%;
+        box-sizing:border-box;
+        .editProfile__label{
+            color:$bright-teal;
+            text-align:center;
+            @include tablet{
+                font-size:18px;
+            }
+        }
+        .editProfile__input{
+            box-sizing:border-box;
+            width:100%;
+            height:80px;
+            font-family:"Changa",sans-serif;
+            background-color:$light-grey;
+            padding:0 15px;
+            @include tablet{
+                width:600px;
+            }
+            
+        }
+        .editProfile__button{
+            margin-top:30px;
+            width:100px;
+            height:40px;
+            border-radius:20px;
+            border:0;
+            background-color:$bright-teal;
+        }
+    }
+}
+.loginError{
+    display:flex;
+    width:100%;
+    text-align:center;
+    justify-content:center;
+    font-size:30px;
+    color:$bright-teal;
+    font-family:"Changa"sans-serif;
+}

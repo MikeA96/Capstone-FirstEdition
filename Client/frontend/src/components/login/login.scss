@@ -1,0 +1,58 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.login{
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    box-sizing:border-box;
+   
+        font-family:"Fugaz One";
+    .login__title{
+        margin:0;
+        color:$bright-teal;
+        margin-top:30px;
+        @include tablet{
+            font-size:60px;
+        }
+    }
+    .login__form{
+        margin-top:50px;
+        display:flex;
+        flex-direction:column;
+        box-sizing:border-box;
+        width:50%;
+        align-items:center;
+        @include tablet{
+            width:33%;
+        }
+        .login__text{
+            border-radius:4px;
+            background-color:$light-grey;
+            margin-bottom:5px;
+            color:$bright-teal;
+            width:100%;
+            height:40px;
+            box-sizing:border-box;
+            padding-left:10px;
+            font-family:"Changa",sans-serif;
+        }
+        .login__error{
+            color:red;
+        }
+        .login__button{
+            width:50%;
+            height:30px;
+            border-radius:15px;
+            font-family:"Changa",sans-serif;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:16px;
+            color:$light-black;
+            background-color:$bright-teal;
+        }
+    }
+}

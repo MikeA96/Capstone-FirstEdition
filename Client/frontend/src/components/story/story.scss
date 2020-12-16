@@ -1,0 +1,133 @@
+@use "./../../styles/mixins" as *;
+@use "./../../styles/typography" as *;
+@use "./../../styles/colors.scss" as *;
+.story{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    font-family:"Changa",sans-serif;
+    padding:0 20px;
+    box-sizing:border-box;
+    .story__title{
+        color:$bright-teal;
+        font-family:"Fugaz One",cursive;
+        text-align:center;
+        @include tablet{
+            font-size:50px;
+        }
+    }
+    .story__sub-title{
+        color:$light-grey;
+        font-size:20px;
+        @include tablet{
+            font-size:25px;
+        }
+        .user__link{
+            text-decoration:none;
+            color:$light-grey;
+        }
+    }
+    .story__text{
+        background-color:$light-black;
+        text-align:center;
+        color:$light-grey;
+        padding:5px 15px;
+        width:85%;
+       height:600px;
+       overflow:auto;
+       border-radius:8px;
+    }
+    .story__like-form{
+        .story__like--button{
+            width:100px;
+            height:40px;
+            border-radius:20px;
+            border:0;
+            background-color:$bright-teal
+        }
+    }
+    .story__likes{
+        color:$bright-teal;
+        font-size:20px;
+    }
+    .story__comments-form{
+        display:flex;
+        flex-direction:column;
+        margin-top:20px;
+        width:75%;
+        .story__comment-title{
+            font-size:20px;
+            color:$dark-teal;
+            text-align:center;
+        }
+        .story__comment-label{
+            color:$light-grey;
+            text-align:center;
+        }
+        .story__comment-input{
+            height:40px;
+        }
+        .story__comment-button{
+            width:50%;
+            margin-top:5px;
+            align-self:center;
+            height:30px;
+            border-radius:20px;
+            border:0;
+            background-color:$bright-teal;
+        }
+    }
+    .story__comments{
+        width:100%;
+        margin:25px 0;
+        .comments__container{
+            color:$light-grey;
+            width:100%;
+            .comments__sub-container{
+                border-bottom:1px solid $light-grey;
+                width:100%;
+                display:flex;
+                flex-direction:column;
+                align-items:center;
+                .comments__title-container{
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    width:100%;
+                    .comments__title{
+                        margin:0;
+                        font-size:16px;
+                    }
+                    .comments__timestamp{
+                        font-size:12px;
+                        margin:0;
+                        
+                    }
+                }
+                .comments__like-container{
+                    .comments__likes{
+                         margin:0;
+                    }
+                }
+            }
+            .comments__sub-container:first-child{
+                border-top:1px solid $light-grey;
+            }
+        }
+    }
+    .comments__empty{
+        color:$bright-teal;
+        display:flex;
+        justify-content:center;
+    }
+    .story__edit-link{
+        .story__edit-button{
+            width:100px;
+            height:30px;
+            background-color:$bright-teal;
+            border-radius:20px;
+            border:0;
+            margin-bottom:20px;
+        }
+    }
+}
