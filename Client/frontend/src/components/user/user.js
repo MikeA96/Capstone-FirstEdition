@@ -13,8 +13,9 @@ class User extends Component{
         let link = this.props.match.params.user
         axios.all([axios.get(`http://localhost:8080/user/${link}`),axios.get(`http://localhost:8080/story/${link}`)]).then(
             (response)=>{
+                console.log(response)
            this.setState({
-                userInfo:response[0].data[0],
+                userInfo:response[0].data,
                 userStories:response[1].data
             })}
         )
@@ -44,7 +45,7 @@ class User extends Component{
                         </div>
                         <div className="user__story-info-container">
                             <p className="user__story--info">{story.likes} likes</p>
-                            <p className="user__story--info">{story.comments.length} comments</p>
+                            {/*<p className="user__story--info">{story.comments.length} comments</p>*/}
                         </div>
                     </div>
                     

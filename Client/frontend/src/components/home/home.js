@@ -13,7 +13,7 @@ class Home extends Component{
     componentDidMount(){
         axios.get('http://localhost:8080/story').then((response)=>{
             this.setState({
-                stories:response.data
+                stories:response.data.reverse()
             })
         })
     }
@@ -75,6 +75,7 @@ class Home extends Component{
                     <button onClick={this.handleReset} className="home__reset">Reset Filter</button>
                     <div className="home__content--main-container">
             {this.spliceStory(this.state.stories).map((story)=>{
+
                 return(
                     <div key={story.id} className="home__content-container">
                         <div className="home__content">
@@ -89,7 +90,7 @@ class Home extends Component{
                         </div>
                         <div className="home__info-container">
                             <p className="home__likes">{story.likes} likes</p>
-                            <p className="home__comments">{story.comments.length} comments</p>
+                           {/* <p className="home__comments">{story.comments.length} comments</p>*/}
                         </div>
                     </div>
                     

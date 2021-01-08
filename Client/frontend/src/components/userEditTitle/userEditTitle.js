@@ -26,8 +26,9 @@ class UserEditTitle extends Component{
             })
             axios.get(`http://localhost:8080/findstory/${response.data.username}/${link}`).then(
                 (response)=>{
+                    console.log(response)
                     this.setState({
-                        storyId:response.data[0].id
+                        storyId:response.data.id
                     })
                 }
             )

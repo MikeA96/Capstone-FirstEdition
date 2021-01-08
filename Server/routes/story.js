@@ -5,6 +5,9 @@ require('dotenv').config();
 app.use(express.json());
 const { v4: uuidv4 } = require('uuid');
 const fs=require('fs')
+const Stories =require('../models/stories')
+const Comments = require('../models/comments')
+const { query } = require('express');
 
 
 function getStories(){
@@ -32,13 +35,15 @@ function findStory(username,title){
 }
 
 router.get('/story', (_req,res)=>{
-    const story=getStories();
-   mostLiked= story.sort(function(a,b){return a.likes-b.likes})
-    res.status(200).json(mostLiked.reverse())
+   Stories
+   .query('orderBy','likes')
+   .fetchAll()
+   .then(story=>{
+    res.status(200).json(story)})
 })
 
 router.get('/story/:user',(req,res)=>{
-    user=req.params.user
+   /* user=req.params.user
     story=getStories()
     people=getUsers()
     mainStory=people.filter(person=>person.username===req.params.user)
@@ -57,23 +62,43 @@ router.get('/story/:user',(req,res)=>{
     }
 else{
     res.json({failure:true})
-}})
+}*/
+Stories
+.where({username:req.params.user})
+.fetchAll()
+.then(story=>{
+    res.status(200).json(story)
+})
+
+})
 
 router.get('/:story',(req,res)=>{
-    allStories=getStories()
+   /* allStories=getStories()
     const indiv=allStories.filter(story=>story.id==req.params.story)
-    res.status(200).json(indiv)
+    res.status(200).json(indiv) */
+    Stories
+    .where({id:req.params.story})
+    .fetch()
+    .then(story=>{
+        res.status(200).json(story)
+    })
 })
 
 router.get('/findStory/:username/:title',(req,res)=>{
-    username=req.params.username
+  /*  username=req.params.username
     title=req.params.title
     mainFind=findStory(username,title)
-    res.status(200).json(mainFind)
+    res.status(200).json(mainFind)*/
+    Stories
+    .where({username:req.params.username}&&{title:req.params.title})
+    .fetch()
+    .then(story=>{
+        res.status(200).json(story)
+    })
 })
 
 router.post('/story',(req,res)=>{
-    const story = getStories()
+  /*  const story = getStories()
     const user=getUsers()
     const newId=uuidv4()
     const findUser=user.findIndex(person=>person.username===req.body.username)
@@ -96,11 +121,26 @@ router.post('/story',(req,res)=>{
     }
     else{
         res.json({failure:true})
-    }
+    }*/
+    if(req.body.title.length &&req.body.text.length&&req.body.genre.length){
+     const newId=uuidv4()
+    new Stories({
+        username:req.body.username,
+        id:newId,
+        title:req.body.title,
+        text:req.body.text,
+        genre:req.body.genre.toLowerCase(),
+        likes:0
+    })
+    .save(null,{method:'insert'})
+    .then(story=>{
+        res.status(200).json({success:true})
+    })}
+    else{res.json({failure:true})}
 })
 
 router.post('/like/:id',(req,res)=>{
-    story=getStories()
+   /* story=getStories()
     indiv=story.findIndex(element=>element.id===req.params.id)
     story[indiv].likes++
     if(indiv!==-1){
@@ -109,11 +149,54 @@ router.post('/like/:id',(req,res)=>{
     }
     else{
         res.json({failure:true})
-    }
+    }*/
+    Stories
+    .where({id:req.params.id})
+    .fetch({columns:['likes']})
+    .then(story=>{
+         final=JSON.parse(JSON.stringify(story))
+        Stories
+        .where({id:req.params.id})
+        .save({likes:final.likes+1},{patch:true})
+        .then(story=>{
+            res.status(200).json(story)
+        })
+    })
+    /*.increment('likes',+1)
+    .fetch()
+    .then(story=>{
+        return story.save({
+            username:story.username,
+            id:story.id,
+            title:story.title,
+            text:story.text,
+            genre:story.genre,
+            likes:story,
+            comments:story.comments
+        })
+    })
+    .then(
+        Stories
+        .where({id:req.params.id})
+        .fetch()
+        .then(story=>{
+            res.status(200).json(story)
+        })
+    )
+    */
+})
+
+router.get('/comments/:id',(req,res)=>{
+Comments
+.where({storyID:req.params.id})
+.fetchAll()
+.then(comment=>{
+    res.status(200).json(comment)
+})
 })
 
 router.post('/comment/:id',(req,res)=>{
-    story=getStories()
+    /*story=getStories()
     indiv=story.findIndex(element=>element.id===req.params.id)
     newComment={
         username:req.body.username,
@@ -128,6 +211,16 @@ router.post('/comment/:id',(req,res)=>{
     }
     else{
         res.json({failure:true})
+    }*/
+    if(req.body.text.length){
+        new Comments({
+            storyID:req.params.id,
+            username:req.body.username,
+            text:req.body.text,
+            likes:0
+        })
+        .save(null,{method:'insert'})
+        .then()
     }
 })
 

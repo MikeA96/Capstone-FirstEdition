@@ -7,6 +7,7 @@ import './story.scss'
 class Story extends Component {
 state={
     story:false,
+    comments:false,
     username:false
 }
 
@@ -14,17 +15,24 @@ componentDidMount(){
     let link=this.props.match.params.storyId
     const authorize=sessionStorage.getItem('authToken')
     if(authorize!==null){
-        console.log('hello from this')
             axios.get('http://localhost:8080/profile',{
                 headers:{authorization:`Bearer ${authorize}`}
-            }).then(response =>this.setState({
+            }).then(response =>{
+                this.setState({
                 username:response.data.username
-            }))}
-    axios.get('http://localhost:8080/'+link).then(response=>{
+            })})}
+   /* axios.get('http://localhost:8080/'+link).then(response=>{
         this.setState({
-           story:response.data[0]
+           story:response.data
         })
-    })
+    })*/
+    axios.all([(axios.get('http://localhost:8080/'+link)),axios.get(`http://localhost:8080/comments/${link}`)]).then(
+        (response)=>{
+       this.setState({
+            story:response[0].data,
+            comments:response[1].data
+        })}
+    )
         
 }
 
@@ -36,6 +44,7 @@ axios.post('http://localhost:8080/like/'+link).then( (response)=>{
         story:response.data
     })
 }
+
 )
 }
 handleComment=(event)=>{
@@ -44,25 +53,33 @@ handleComment=(event)=>{
     axios.post('http://localhost:8080/comment/'+link,{
         username:this.state.username,
         text:event.target.text.value
-    }).then((response)=>{
+    }).then(/*(response)=>{
+        console.log(response)
         this.setState({
-            story:response.data
+            comments:response.data
         })
+    }*/
+    axios.get('http://localhost:8080/comments/'+link).then((response)=>{
+       console.log(response)
+    this.setState({
+        comments:response.data
     })
+    })
+    )
 }
 
 comments=()=>{
-    if(this.state.story.comments&&this.state.story.comments.length!==0)
+    if(this.state.comments&&this.state.comments.length!==0)
     {
        return(
            
        <div className="comments__container">
-            {this.state.story.comments.map((element)=>{
+            {this.state.comments.map((element)=>{
             return(
                 <div key={element.timestamp} className="comments__sub-container" >
                     <div className="comments__title-container">
                     <h3 className="comments__title">{element.username}</h3>
-                    <p className="comments__timestamp">{new Date(element.timestamp).toDateString()}</p>
+                    <p className="comments__timestamp">{element.timestamp}</p>
                     </div>
                     <p className="comments__text">{element.text}</p>
                     <div className="comments__like-container">
@@ -75,7 +92,7 @@ comments=()=>{
 
     )
     }
-    else if(this.state.story.comments &&this.state.story.comments.length===0){
+    else if(this.state.comments &&this.state.comments.length===0){
         return(
             <div className="comments__empty">
                 <div>

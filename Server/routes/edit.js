@@ -6,6 +6,8 @@ app.use(express.json());
 const { v4: uuidv4 } = require('uuid');
 const fs=require('fs');
 const e = require('express');
+const Edits = require('../models/edits')
+const UserInfo =require('../models/userInfo');
 
 
 function getEdits(){
@@ -52,7 +54,7 @@ function findEvery(edited){
 
 
 router.post('/edit',(req,res)=>{
-    edit=getEdits();
+   /* edit=getEdits();
     user=getUsers();
     id=uuidv4()
     const main=req.body
@@ -73,33 +75,68 @@ router.post('/edit',(req,res)=>{
         fs.writeFileSync('./data/userInfo.json',JSON.stringify(user))
         res.status(200).json({success:true})
     }
-    else{res.json({failure:true})}
+    else{res.json({failure:true})}*/
+    const main=req.body
+    const newId=uuidv4()
+    mainUser=UserInfo.where({username:main.username}).fetch();
+    if(main.username.length&&main.title.length&&main.text.length&&main.editor.length&&mainUser!==null){
+       new Edits({
+        username:main.username,
+        title:main.title,
+        text:main.text,
+        editor:main.editor,
+        id:newId,
+        likes:0
+       })
+       .save(null,{method:'insert'})
+       .then(edit=>{
+           res.status(200).json({success:true})
+       })}
+       else{res.json({failure:true})}
 
 })
 
 router.get('/edit/:user',(req,res)=>{
-    edit=getEdits()
+   /* edit=getEdits()
     username=req.params.user
     allEdits=findEdit(username)
     everyEdit=findEvery(allEdits)
-    res.status(200).json(everyEdit)
+    res.status(200).json(everyEdit) */
+    Edits
+    .where({username:req.params.user})
+    .fetchAll()
+    .then(edit=>{
+        res.status(200).json(edit)
+    })
+
 })
 
 router.get('/edit/:user/:story',(req,res)=>{
-    edit=getEdits()
+  /*  edit=getEdits()
     username=req.params.user
     story=req.params.story
     allEdits=findEdit(username)
     everyEdit=findEvery(allEdits) 
     storyEdit=everyEdit.filter(element=>element.title===story)
-    res.status(200).json(storyEdit)
+    res.status(200).json(storyEdit)*/
 
+    Edits.where({username:req.params.user}&&{title:req.params.story})
+    .fetchAll()
+    .then(edit=>{
+        res.status(200).json(edit)
+    })
 })
 
 router.get('/edited/:id',(req,res)=>{
-    edit=getEdits()
+  /*  edit=getEdits()
    single= edit.filter(element=>element.id===req.params.id)
-   res.status(200).json(single)
+   res.status(200).json(single)*/
+   Edits
+   .where({id:req.params.id})
+   .fetch()
+   .then(edit=>{
+       res.status(200).json(edit)
+   })
 })
 
 module.exports=router

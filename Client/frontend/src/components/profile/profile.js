@@ -16,12 +16,15 @@ class Profile extends Component{
         if(authorize!==null){
         axios.get('http://localhost:8080/profile',{
             headers:{authorization:`Bearer ${authorize}`}
-        }).then((response) =>{this.setState({
+        }).then((response) =>{
+            console.log(response)
+            this.setState({
             username:response.data.username,
-            name:response.data.name
+            name:response.data.findName
         })
         axios.all([axios.get(`http://localhost:8080/story/${response.data.username}`),axios.get(`http://localhost:8080/edit/${response.data.username}`)]).then(
             (response)=>{
+                console.log(response)
                 this.setState({
                     stories:response[0].data,
                     edits:response[1].data
@@ -54,7 +57,7 @@ class Profile extends Component{
                                     </div>
                                     <div className="profile__info-container">
                                         <p className="profile__info">{element.likes} likes</p>
-                                        <p className="profile__info">{element.comments.length} comments</p>
+                                       { /*<p className="profile__info">{element.comments.length} comments</p>*/}
                                     </div>
                                 </div>
                         )})}

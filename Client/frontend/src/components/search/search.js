@@ -6,15 +6,19 @@ import './search.scss'
 
 class Search extends Component{
     state={
-        searchQuery:false
+        searchUsers:false,
+        searchStories:false
     }
 
     componentDidMount(){
         const link=this.props.match.params.search
         axios.get(`http://localhost:8080/search/${link}`).then((response)=>{
+      const search=response.data.shift()
             this.setState({
-                searchQuery:response.data
+                searchUsers:search,
+                searchStories:response.data
             })
+            
         })
 
     }
@@ -23,27 +27,29 @@ class Search extends Component{
         const link=this.props.match.params.search
         if(prevProps.match.url!==main){
             axios.get(`http://localhost:8080/search/${link}`).then((response)=>{
-            this.setState({
-                searchQuery:response.data
-            })
+                const users=response.data.shift()
+                this.setState({
+                    searchUsers:users,
+                    searchStories:response.data
+                })
         })
         }
     }
     render(){
-        if(this.state.searchQuery&&(this.state.searchQuery[0].length||this.state.searchQuery[1].length)){
+        if((this.state.searchUsers||this.state.searchStories)&&(this.state.searchUsers.length||this.state.searchStories.length)){
             return(
                 <div className="search">
                     <Nav history={this.props}/>
                     <h2 className="search__title">Stories</h2>
-                    {this.state.searchQuery[0].map(element=>{
+                    {this.state.searchStories.map(element=>{
                         return(
-                        <Link to={'/story/'+element.id} className="search__content">{element.title}</Link>
+                        <Link to={'/story/'+element.id} className="search__content" key={element.id}>{element.title}</Link>
                         )
                     })}
                     <h2 className="search__title">Users</h2>
-                    {this.state.searchQuery[1].map(element=>{
+                    {this.state.searchUsers.map(element=>{
                         return(
-                        <Link to ={'/user/'+element.username} className="search__content">{element.username}</Link>
+                        <Link to ={'/user/'+element.username} className="search__content" key={element.username}>{element.username}</Link>
                         )
                     })}
                 </div>

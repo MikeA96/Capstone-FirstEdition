@@ -16,8 +16,8 @@ class SingleEdit extends Component{
         axios.all([axios.get(`http://localhost:8080/${main}`),axios.get(`http://localhost:8080/edited/${edited}`)]).then(
             (response)=>{
                 this.setState({
-                    story:response[0].data[0].text,
-                    edit:response[1].data[0].text
+                    story:response[0].data.text,
+                    edit:response[1].data.text
                 })
             }
         )

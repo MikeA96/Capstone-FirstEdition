@@ -25,7 +25,7 @@ class Add extends Component {
             title:event.target.title.value,
             text:event.target.text.value,
             genre:event.target.genre.value,
-        }).then(this.props.history.push('/home'))
+        }).then(setTimeout(()=>{this.props.history.push('/home')},500))
     }
     render(){
         if(this.state.username){
