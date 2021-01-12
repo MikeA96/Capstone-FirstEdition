@@ -27,6 +27,7 @@ if (process.env.JAWSDB_URL) {
     app.use(express.static("../Client/frontend/build"));
   
     app.get("*", (req, res) => {
+        console.log("test")
       res.sendFile(path.join(__dirname, "../Client/frontend", "build", "index.html"));
     });
  // }
