@@ -13,18 +13,18 @@ class UserEditTitle extends Component{
      componentDidMount(){
          const link=this.props.match.params.story
         const authorize=sessionStorage.getItem('authToken')
-        axios.get('http://localhost:8080/profile',{
+        axios.get('/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>{
             this.setState({
             username:response.data.username
         })
-            axios.get(`http://localhost:8080/edit/${response.data.username}/${link}`).then((response)=>{
+            axios.get(`/edit/${response.data.username}/${link}`).then((response)=>{
                 this.setState({
                     edits:response.data.reverse()
                 })
             })
-            axios.get(`http://localhost:8080/findstory/${response.data.username}/${link}`).then(
+            axios.get(`/findstory/${response.data.username}/${link}`).then(
                 (response)=>{
                     this.setState({
                         storyId:response.data.id
@@ -36,12 +36,12 @@ class UserEditTitle extends Component{
 
      handleDelete=(event)=>{
        event.preventDefault();
-       axios.delete(`http://localhost:8080/edit/${event.target.edit.value}`,{
+       axios.delete(`/edit/${event.target.edit.value}`,{
            data:{
                username:this.state.username
            }
        }).then(
-           setTimeout(()=>{axios.get(`http://localhost:8080/edit/${this.state.username}/${this.props.match.params.story}`).then((response)=>{
+           setTimeout(()=>{axios.get(`/edit/${this.state.username}/${this.props.match.params.story}`).then((response)=>{
                this.setState({
                    edits:response.data
                })

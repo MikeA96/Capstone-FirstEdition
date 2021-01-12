@@ -12,7 +12,7 @@ class Search extends Component{
 
     componentDidMount(){
         const link=this.props.match.params.search
-        axios.get(`http://localhost:8080/search/${link}`).then((response)=>{
+        axios.get(`/search/${link}`).then((response)=>{
       const search=response.data.shift()
             this.setState({
                 searchUsers:search,
@@ -26,7 +26,7 @@ class Search extends Component{
         let main=this.props.match.url
         const link=this.props.match.params.search
         if(prevProps.match.url!==main){
-            axios.get(`http://localhost:8080/search/${link}`).then((response)=>{
+            axios.get(`/search/${link}`).then((response)=>{
                 const users=response.data.shift()
                 this.setState({
                     searchUsers:users,

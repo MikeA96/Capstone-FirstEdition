@@ -13,18 +13,18 @@ class UserEdits extends Component {
     componentDidMount(){
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('http://localhost:8080/profile',{
+        axios.get('/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>{
             this.setState({
             username:response.data.username
         })
-        axios.get(`http://localhost:8080/story/${response.data.username}`).then((response)=>{
+        axios.get(`/story/${response.data.username}`).then((response)=>{
             this.setState({
                 userStories:response.data
             })
         })
-        axios.get(`http://localhost:8080/edit/${response.data.username}`).then(
+        axios.get(`/edit/${response.data.username}`).then(
             (response)=>{
                 this.setState({
                     edits:response.data

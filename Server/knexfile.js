@@ -1,7 +1,8 @@
 // Update with your config settings.
 
 module.exports = {
-  client:"mysql",
+  development:{
+    client:"mysql",
   connection:{
     host:"127.0.0.1",
     user:"root",
@@ -9,4 +10,10 @@ module.exports = {
     database:"FirstEdition",
     charset:"utf8"
   }
+},
+production:{
+client:"mysql",
+connection:process.env.JAWSDB_URL
+}
+
 };

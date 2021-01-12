@@ -13,7 +13,7 @@ class Signup extends Component {
             event.target.name.value.length&&
             event.target.password.value.length
             ){
-        axios.post('http://localhost:8080/signup',{
+        axios.post('/signup',{
             username:event.target.username.value,
             name:event.target.name.value,
             password:event.target.password.value
@@ -25,7 +25,7 @@ class Signup extends Component {
             }
             else{
 
-                setTimeout( ()=>{axios.post('http://localhost:8080/login',{
+                setTimeout( ()=>{axios.post('/login',{
                     username:event.target.username.value,
                     password:event.target.password.value 
                 }

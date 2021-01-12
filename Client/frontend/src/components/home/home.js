@@ -11,7 +11,7 @@ class Home extends Component{
         max:5
     }
     componentDidMount(){
-        axios.get('http://localhost:8080/story').then((response)=>{
+        axios.get('/story').then((response)=>{
             this.setState({
                 stories:response.data.reverse()
             })
@@ -46,7 +46,7 @@ class Home extends Component{
 
     handleFilter=(event)=>{
         event.preventDefault();
-        axios.get(`http://localhost:8080/filter/${event.target.filter.value.toLowerCase()}`).then((response)=>{
+        axios.get(`/filter/${event.target.filter.value.toLowerCase()}`).then((response)=>{
             this.setState({
                 stories:response.data.reverse()
             })
@@ -54,7 +54,7 @@ class Home extends Component{
     }
     
     handleReset=()=>{
-        axios.get('http://localhost:8080/story').then((response)=>{
+        axios.get('/story').then((response)=>{
             this.setState({
                 stories:response.data.reverse()
             })

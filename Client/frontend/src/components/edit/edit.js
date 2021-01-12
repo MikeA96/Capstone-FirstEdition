@@ -15,12 +15,12 @@ class Edit extends Component{
         let link=this.props.match.params.storyId
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('http://localhost:8080/profile',{
+        axios.get('/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then((response) =>{this.setState({
             loginInfo:response.data.username,
         })})}
-    axios.get('http://localhost:8080/'+link).then((response)=>{
+    axios.get('/'+link).then((response)=>{
         this.setState({
            title:response.data.title,
            username:response.data.username,
@@ -36,7 +36,7 @@ class Edit extends Component{
     }
     handleSubmit=(event)=>{
         event.preventDefault();
-axios.post('http://localhost:8080/edit',{
+axios.post('/edit',{
     username:this.state.username,
     title:this.state.title,
     text:event.target.text.value,

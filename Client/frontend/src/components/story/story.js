@@ -16,7 +16,7 @@ componentDidMount(){
     let link=this.props.match.params.storyId
     const authorize=sessionStorage.getItem('authToken')
     if(authorize!==null){
-            axios.get('http://localhost:8080/profile',{
+            axios.get('/profile',{
                 headers:{authorization:`Bearer ${authorize}`}
             }).then(response =>{
                 this.setState({
@@ -27,7 +27,7 @@ componentDidMount(){
            story:response.data
         })
     })*/
-    axios.all([(axios.get('http://localhost:8080/'+link)),axios.get(`http://localhost:8080/comments/${link}`)]).then(
+    axios.all([(axios.get('/'+link)),axios.get(`/comments/${link}`)]).then(
         (response)=>{
        this.setState({
             story:response[0].data,
@@ -41,7 +41,7 @@ componentDidMount(){
 handleLike=(event)=>{
 event.preventDefault();
 let link=this.props.match.params.storyId
-axios.post(`http://localhost:8080/like/${link}`,{
+axios.post(`/like/${link}`,{
         username:this.state.username
 }).then( (response)=>{
     this.setState({
@@ -56,7 +56,7 @@ axios.post(`http://localhost:8080/like/${link}`,{
 handleUnlike=(event)=>{
     event.preventDefault();
     let link=this.props.match.params.storyId
-    axios.delete(`http://localhost:8080/like/${link}`,{
+    axios.delete(`/like/${link}`,{
             username:this.state.username
     }).then((response)=>{
         this.setState({
@@ -69,11 +69,11 @@ handleUnlike=(event)=>{
 handleComment=(event)=>{
     event.preventDefault();
     let link=this.props.match.params.storyId
-    axios.post('http://localhost:8080/comment/'+link,{
+    axios.post('/comment/'+link,{
         username:this.state.username,
         text:event.target.text.value
     }).then(
-    setTimeout(()=>{axios.get('http://localhost:8080/comments/'+link).then((response)=>{
+    setTimeout(()=>{axios.get('/comments/'+link).then((response)=>{
     this.setState({
         comments:response.data
     })
@@ -82,13 +82,13 @@ handleComment=(event)=>{
 }
 handleDelete=(event)=>{
 event.preventDefault();
-axios.delete(`http://localhost:8080/comments/${event.target.comment.value}`,{
+axios.delete(`/comments/${event.target.comment.value}`,{
     data:{
         username:this.state.username
     }
 }).then(setTimeout(()=>{
     
-    axios.get(`http://localhost:8080/comments/${this.props.match.params.storyId}`).then((response)=>{
+    axios.get(`/comments/${this.props.match.params.storyId}`).then((response)=>{
         this.setState({
             comments:response.data
         })
@@ -99,9 +99,9 @@ axios.delete(`http://localhost:8080/comments/${event.target.comment.value}`,{
 handleCommentLike=(event)=>{
 event.preventDefault();
 let link=this.props.match.params.storyId
-axios.post(`http://localhost:8080/comment/like/${event.target.comment.value}`,{
+axios.post(`/comment/like/${event.target.comment.value}`,{
     username:this.state.username
-}).then(setTimeout(()=>{axios.get(`http://localhost:8080/comments/${link}`).then((response)=>{
+}).then(setTimeout(()=>{axios.get(`/comments/${link}`).then((response)=>{
     this.setState({
         comments:response.data.reverse()
     })
@@ -110,9 +110,9 @@ axios.post(`http://localhost:8080/comment/like/${event.target.comment.value}`,{
 handleCommentUnlike=(event)=>{
     event.preventDefault();
     let link=this.props.match.params.storyId
-    axios.delete(`http://localhost:8080/comment/like/${event.target.comment.value}`,{
+    axios.delete(`/comment/like/${event.target.comment.value}`,{
         username:this.state.username
-    }).then(setTimeout(()=>{axios.get(`http://localhost:8080/comments/${link}`).then((response)=>{
+    }).then(setTimeout(()=>{axios.get(`/comments/${link}`).then((response)=>{
         this.setState({
             comments:response.data.reverse()
         })

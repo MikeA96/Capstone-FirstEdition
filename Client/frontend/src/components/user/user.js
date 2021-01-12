@@ -11,7 +11,7 @@ class User extends Component{
     }
     componentDidMount(){
         let link = this.props.match.params.user
-        axios.all([axios.get(`http://localhost:8080/user/${link}`),axios.get(`http://localhost:8080/story/${link}`)]).then(
+        axios.all([axios.get(`/user/${link}`),axios.get(`/story/${link}`)]).then(
             (response)=>{
            this.setState({
                 userInfo:response[0].data,
