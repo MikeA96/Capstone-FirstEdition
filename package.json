@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix Client/frontend",
-    "start": "npm start --prefix server",
-    "server": "nodemon index --prefix server",
+    "start": "npm start --prefix Server",
+    "server": "nodemon index --prefix Server",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Client/frontend && npm install --prefix server && npm run build --prefix Client/frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Client/frontend && npm install --prefix Server && npm run build --prefix Client/frontend"
   },
   "repository": {
     "type": "git",
