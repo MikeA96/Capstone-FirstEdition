@@ -13,12 +13,13 @@
     "react": "^17.0.1",
     "react-diff": "0.0.7",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-stylable-diff": "^2.0.0",
     "sass": "^1.29.0",
     "web-vitals": "^0.2.4"
   },
-  "devDependencies":{
+  "devDependencies": {
     "react-scripts": "4.0.1"
   },
   "scripts": {
