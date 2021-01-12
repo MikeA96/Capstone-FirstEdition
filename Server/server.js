@@ -22,14 +22,14 @@ if (process.env.JAWSDB_URL) {
 
   connection = mysql.createConnection(knex.development);
 }
-if (process.env.NODE_ENV === "production") {
+//if (process.env.NODE_ENV === "production") {
     // Set static folder
     app.use(express.static("../Client/frontend/build"));
   
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../Client/frontend", "build", "index.html"));
     });
-  }
+ // }
 
 
 const getStory=require('./routes/story')
