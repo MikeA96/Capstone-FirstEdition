@@ -16,12 +16,13 @@ class Profile extends Component{
         if(authorize!==null){
         axios.get('http://localhost:8080/profile',{
             headers:{authorization:`Bearer ${authorize}`}
-        }).then((response) =>{this.setState({
+        }).then((response) =>{
+            this.setState({
             username:response.data.username,
-            name:response.data.name
+            name:response.data.findName
         })
         axios.all([axios.get(`http://localhost:8080/story/${response.data.username}`),axios.get(`http://localhost:8080/edit/${response.data.username}`)]).then(
-            (response)=>{
+            (response)=>{ 
                 this.setState({
                     stories:response[0].data,
                     edits:response[1].data
@@ -31,6 +32,18 @@ class Profile extends Component{
         })}
     }
 
+    handleDelete=(event)=>{
+        event.preventDefault();
+        axios.delete(`http://localhost:8080/story/${event.target.story.value}`,{
+            data:{
+            username:this.state.username
+            }
+        }).then(setTimeout(()=>{axios.get(`http://localhost:8080/story/${this.state.username}`).then((response)=>{
+            this.setState({
+                stories:response.data
+            })
+        })},500))
+    }
     render(){
         if(this.state.username&&this.state.name&&!this.state.stories.failure &&this.state.edits){
             return(
@@ -53,9 +66,11 @@ class Profile extends Component{
                                     <p className="profile__content">{element.genre}</p>
                                     </div>
                                     <div className="profile__info-container">
-                                        <p className="profile__info">{element.likes} likes</p>
-                                        <p className="profile__info">{element.comments.length} comments</p>
+                                        <p className="profile__info">{element.liked} likes</p>
                                     </div>
+                                    <form onSubmit={this.handleDelete} >
+                                        <button className="profile__delete" name="story" type="submit" value={element.id} >DELETE STORY</button>
+                                        </form>
                                 </div>
                         )})}
                     </div>

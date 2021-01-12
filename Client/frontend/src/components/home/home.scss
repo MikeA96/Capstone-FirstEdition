@@ -114,25 +114,27 @@
         margin-left:15%;
         }
     }
-    .home__content-container:last-child{
-        @include tablet{
-        margin:15px auto;
-        }
-    }
+   
     .home__content-container:nth-child(2){
         @include tablet{
         margin-right:15%;
         }
     }
-    .home__content-container:nth-child(4){
-        @include tablet{
-        margin-right:15%;
-        }
-    }
+    
     .home__content-container:nth-child(3){
         @include tablet{
         margin-right:20px;
         margin-left:15%;
+        }
+    }
+    .home__content-container:last-child{
+        @include tablet{
+        margin:15px auto;
+        }
+    }
+    .home__content-container:nth-child(4){
+        @include tablet{
+        margin-right:15%;
         }
     }
    

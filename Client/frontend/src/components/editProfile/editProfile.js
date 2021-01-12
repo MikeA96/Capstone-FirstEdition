@@ -16,7 +16,7 @@ class EditProfile extends Component{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>this.setState({
             username:response.data.username,
-            name:response.data.name
+            name:response.data.findName
         }))}
     }
 handleSubmit=(event)=>{

@@ -44,10 +44,7 @@
         align-items:center;
         margin-bottom:40px;
         width:100%;
-        @include tablet{
-            flex-direction:row;
-        }
-        .profile__story-container:nth-child(odd){
+       /* .profile__story-container:nth-child(odd){
             @include tablet{
             margin-right:20px;
             margin-left:21%;
@@ -57,7 +54,7 @@
             @include tablet{
             margin-right:21%;
             }
-        }
+        }*/
         .profile__story-container{
             background-color:$light-black;
             margin-top:25px;
@@ -71,6 +68,12 @@
             @include tablet{
                 height:370px;
             }
+            .profile__delete{
+                border-radius:20px;
+                height:30px;
+                border:0;
+                background-color:$bright-teal
+            }
             .profile__story-subcontainer{
                 display:flex;
                 align-items:center;
@@ -83,6 +86,9 @@
                     color:$dark-teal;
                     @include tablet{
                         font-size:26px;
+                    }
+                    @include desktop{
+                        font-size:40px;
                     }
                 }
             }

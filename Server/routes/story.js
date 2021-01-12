@@ -4,132 +4,233 @@ const router=express.Router();
 require('dotenv').config();
 app.use(express.json());
 const { v4: uuidv4 } = require('uuid');
-const fs=require('fs')
+const Stories =require('../models/stories')
+const Comments = require('../models/comments')
+const Edits= require('../models/edits')
 
 
-function getStories(){
-    story=fs.readFileSync('./data/stories.json')
-    return JSON.parse(story)
-}
-function getUsers(){
-    user=fs.readFileSync('./data/userInfo.json')
-    return JSON.parse(user)
-}
-
-function findPerson(username){
-    find=getUsers()
-    for(let i = 0; i<find.length;i++){
-        if(find[i].username===username){
-            return true
-        }
-    }
-}
-
-function findStory(username,title){
-    story=getStories()
-    mainFilter=story.filter(element=>element.username===username&&element.title===title)
-    return mainFilter
-}
 
 router.get('/story', (_req,res)=>{
-    const story=getStories();
-   mostLiked= story.sort(function(a,b){return a.likes-b.likes})
-    res.status(200).json(mostLiked.reverse())
+   Stories
+   .query('orderBy','liked')
+   .fetchAll()
+   .then(story=>{
+    res.status(200).json(story)})
 })
 
 router.get('/story/:user',(req,res)=>{
-    user=req.params.user
-    story=getStories()
-    people=getUsers()
-    mainStory=people.filter(person=>person.username===req.params.user)
-    personStories=mainStory[0].stories
-    findStories= (something)=>{
-        storyArray=[]
-        for(let i =0; i<story.length;i++){
-          if(something.includes(story[i].id)){
-              storyArray.push(story[i])
-          } 
-        }
-        return storyArray
-    }
-    if(mainStory[0].stories.length){
-    res.status(200).json(findStories(personStories))
-    }
-else{
-    res.json({failure:true})
-}})
+  
+Stories
+.where({username:req.params.user})
+.fetchAll()
+.then(story=>{
+    res.status(200).json(story)
+})
+
+})
 
 router.get('/:story',(req,res)=>{
-    allStories=getStories()
-    const indiv=allStories.filter(story=>story.id==req.params.story)
-    res.status(200).json(indiv)
+  
+    Stories
+    .where({id:req.params.story})
+    .fetch()
+    .then(story=>{
+        res.status(200).json(story)
+    })
 })
 
 router.get('/findStory/:username/:title',(req,res)=>{
-    username=req.params.username
-    title=req.params.title
-    mainFind=findStory(username,title)
-    res.status(200).json(mainFind)
+  
+    Stories
+    .where({username:req.params.username}&&{title:req.params.title})
+    .fetch()
+    .then(story=>{
+        res.status(200).json(story)
+    })
 })
 
 router.post('/story',(req,res)=>{
-    const story = getStories()
-    const user=getUsers()
-    const newId=uuidv4()
-    const findUser=user.findIndex(person=>person.username===req.body.username)
-    const newStory={
+  
+    if(req.body.title.length &&req.body.text.length&&req.body.genre.length){
+     const newId=uuidv4()
+    new Stories({
         username:req.body.username,
         id:newId,
         title:req.body.title,
         text:req.body.text,
         genre:req.body.genre.toLowerCase(),
-        comments:[],
-        likes:0,
-        created:Date.now()
-    }
-    if(findPerson(req.body.username)){
-    story.push(newStory)
-    fs.writeFileSync('./data/stories.json',JSON.stringify(story))
-    user[findUser].stories.unshift(newId)
-    fs.writeFileSync('./data/userInfo.json',JSON.stringify(user))
-    res.status(200).json({success:true})
-    }
-    else{
-        res.json({failure:true})
-    }
+        likes:'[]'
+    })
+    .save(null,{method:'insert'})
+    .then(story=>{
+        res.status(200).json({success:true})
+    })}
+    else{res.json({failure:true})}
+})
+
+router.delete('/like/:id',(req,res)=>{
+    Stories
+    .where({id:req.params.id})
+    .fetch()
+    .then(story=>{
+        final=JSON.parse(JSON.stringify(story))
+        make=JSON.parse(final.likes)
+       makeFind= make.findIndex((element)=>element===req.body.username)
+        make.splice(makeFind,1)
+        like=make.length
+       Stories
+       .where({id:req.params.id})
+       .save({id:final.id,likes:JSON.stringify(make),liked:like},{method:'update',require:true,patch:true})
+       .then(story=>{
+           res.status(200).json(story)
+       })
+    })
 })
 
 router.post('/like/:id',(req,res)=>{
-    story=getStories()
-    indiv=story.findIndex(element=>element.id===req.params.id)
-    story[indiv].likes++
-    if(indiv!==-1){
-    fs.writeFileSync('./data/stories.json',JSON.stringify(story))
-    res.status(200).json(story[indiv])
+  
+    Stories
+    .where({id:req.params.id})
+    .fetch()
+    .then(story=>{
+         final=JSON.parse(JSON.stringify(story))
+         make=JSON.parse(final.likes)
+         
+        let search=null
+         for(let i=0;i<make.length;i++){
+            if(make[i]===req.body.username){
+                search=make[i]
+            }
+         }
+         
+        if(search===null){
+         make.push(req.body.username)
+         like=make.length
+        Stories
+        .where({id:req.params.id})
+        .save({id:final.id,likes:JSON.stringify(make),liked:like},{method:'update',require:true,patch:true})
+        .then(story=>{
+            res.status(200).json(story)
+        }
+        
+        )
+    }else{
+        res.status(200).json({failure:true})
+    }})
+    
+})
+
+router.get('/comments/:id',(req,res)=>{
+Comments
+.where({storyID:req.params.id})
+.query('orderBy','likes')
+.fetchAll()
+.then(comment=>{
+    res.status(200).json(comment)
+})
+})
+router.post('/comment/like/:id',(req,res)=>{
+Comments
+.where({id:req.params.id})
+.fetch()
+.then(comment=>{
+    first=JSON.parse(JSON.stringify(comment))
+    second=JSON.parse(first.liked)
+   find= second.findIndex((element)=>element===req.body.username)
+    if(find===-1){
+        second.push(req.body.username)
+        Comments
+        .where({id:req.params.id})
+        .save({id:first.id,liked:JSON.stringify(second),likes:second.length},{method:'update',require:true,patch:true})
+        .then(comment=>{
+            res.status(200).json(comment)
+        })
     }
     else{
-        res.json({failure:true})
+        res.status(200).json({failure:true})
     }
+})
+})
+
+router.delete('/comment/like/:id',(req,res)=>{
+    Comments
+    .where({id:req.params.id})
+    .fetch()
+    .then(comment=>{
+        first=JSON.parse(JSON.stringify(comment))
+        second=JSON.parse(first.liked)
+        mainFind=second.findIndex((element)=>element===req.body.username)
+        second.splice(mainFind,1)
+        Comments
+        .where({id:req.params.id})
+        .save({id:first.id,likes:second.length,liked:JSON.stringify(second)},{method:'update',require:true,patch:true})
+        .then(comment=>{
+            res.status(200).json(comment)
+        })
+    })
 })
 
 router.post('/comment/:id',(req,res)=>{
-    story=getStories()
-    indiv=story.findIndex(element=>element.id===req.params.id)
-    newComment={
-        username:req.body.username,
-        timestamp:Date.now(),
-        text:req.body.text,
-        likes:0
-    }
-    story[indiv].comments.unshift(newComment)
+   
     if(req.body.text.length){
-        fs.writeFileSync('./data/stories.json',JSON.stringify(story))
-        res.status(200).json(story[indiv])
-    }
-    else{
-        res.json({failure:true})
+        new Comments({
+            storyID:req.params.id,
+            username:req.body.username,
+            text:req.body.text,
+            likes:0,
+            liked:'[]'
+        })
+        .save(null,{method:'insert'})
+        .then()
     }
 })
+router.delete('/story/:id',(req,res)=>{
+    const {username}=req.body
+    Stories
+    .where({id:req.params.id})
+    .fetch()
+    .then(story=>{
+        let find=JSON.parse(JSON.stringify(story))
+        if(username===find.username){
+            Stories
+            .where({id:req.params.id})
+            .destroy()
+            .then(story=>{
+                Edits
+                .where({title:find.title})
+                .fetchAll()
+                .then(edits=>{
+                    mainFind=JSON.parse(JSON.stringify(edits))
+                    for(let i=0;i<mainFind.length;i++){
+                        if(mainFind[i].title===find.title&&mainFind[i].username===username){
+                            Edits
+                            .where({id:mainFind[i].id})
+                            .destroy()
+                        }
+                    }
+                })
+                .then(res.status(204).json({success:true}))
+            })
+        }
+        else{res.status(200).json({failure:true})}
+    })
+})
 
+router.delete('/comments/:id',(req,res)=>{
+    const {username}=req.body
+    Comments
+    .where({id:req.params.id})
+    .fetch()
+    .then(comment=>{
+        mainFind=JSON.parse(JSON.stringify(comment))
+        if(mainFind.username===username){
+            Comments
+            .where({id:req.params.id})
+            .destroy()
+            .then(res.status(204).json({success:true}))
+        }
+        else{res.status(200).json({failure:true})}
+    })
+})
 
 module.exports=router
