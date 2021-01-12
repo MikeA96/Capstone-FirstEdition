@@ -65,7 +65,10 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
           .then(res.status(200).json({success:true}))
           }
             else{res.json({failure:"true"})}
-      })
+      }).catch((err)=>{
+        console.log(err)
+        res.status(404).send("weeee")
+    })
       
         
       
