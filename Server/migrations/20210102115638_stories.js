@@ -7,7 +7,7 @@ exports.up = function(knex) {
       table.longtext("text").notNullable();
       table.string("genre").notNullable();
       table.json("comments").defaultTo([]).notNullable();
-      table.integer("likes").defaultTo(0).notNullable();
+      table.json("likes");
       table.timestamp("created").defaultTo(knex.fn.now());
   })
 };

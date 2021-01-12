@@ -21,12 +21,11 @@ class UserEditTitle extends Component{
         })
             axios.get(`http://localhost:8080/edit/${response.data.username}/${link}`).then((response)=>{
                 this.setState({
-                    edits:response.data
+                    edits:response.data.reverse()
                 })
             })
             axios.get(`http://localhost:8080/findstory/${response.data.username}/${link}`).then(
                 (response)=>{
-                    console.log(response)
                     this.setState({
                         storyId:response.data.id
                     })
@@ -34,6 +33,22 @@ class UserEditTitle extends Component{
             )
     })
      }
+
+     handleDelete=(event)=>{
+       event.preventDefault();
+       axios.delete(`http://localhost:8080/edit/${event.target.edit.value}`,{
+           data:{
+               username:this.state.username
+           }
+       }).then(
+           setTimeout(()=>{axios.get(`http://localhost:8080/edit/${this.state.username}/${this.props.match.params.story}`).then((response)=>{
+               this.setState({
+                   edits:response.data
+               })
+           })},500)
+       )
+     }
+
      render(){
          const link=this.props.match.params.story
          if(this.state.username&&this.state.edits && this.state.storyId){
@@ -44,10 +59,17 @@ class UserEditTitle extends Component{
                  <h1 className="userEditTitle__title">{this.state.username}<br/> {link}</h1>
                  {this.state.edits.map(element=>{
                      return(
-                    <Link to={'/edited/'+this.state.storyId+'/'+element.id} key={element.id} className="userEditTitle__link">
+                         <div key={element.id} className="userEditTitle__link">
+                    <Link to={'/edited/'+this.state.storyId+'/'+element.id} className="userEditTitle__link">
                         <h3 className="userEditTitle__link--title">{element.editor}</h3>
                          <p className="userEditTitle__link--content">{new Date(element.created).toDateString()}</p>
-                    </Link>     
+                         <p className="userEditTitle__link--content"> {element.editorLikes} Editor Likes</p>
+                         
+                    </Link>  
+                    <form onSubmit={this.handleDelete}>
+                        <button type="submit" name="edit" value={element.id} className="userEditTitle__delete">DELETE EDIT</button>
+                    </form>
+                    </div>   
                      )
                  })}
                  </div>

@@ -1,7 +1,6 @@
 const express=require('express');
 const app=express();
 const jwt=require('jsonwebtoken')
-const fs=require('fs')
 const bcrypt=require('bcrypt')
 const { v4: uuidv4 } = require('uuid');
 const saltRounds=10;
@@ -11,36 +10,6 @@ const JWT_SECRET=process.env.JWT_SECRET
 const router=express.Router();
 const UserInfo =require('../models/userInfo');
 const Users =require('../models/users'); 
-
-function findUsers(){
-    const findContent=fs.readFileSync('./data/users.json')
-    return JSON.parse(findContent)
-}
-function findInfo(){
-    const findContent=fs.readFileSync('./data/userInfo.json')
-    return JSON.parse(findContent)
-}
-
-function checkUsers(username){
-    /*const user=findUsers()
-    for (let i=0; i<user.length;i++){
-        let index=null
-        if(username===user[i].username){
-            index=i
-            return index
-        }
-    }*/
-   let checker=[]
-    Users
-    .fetchAll({categories:['username']})
-    .then(user=>{
-       return JSON.parse(JSON.stringify(user))
-    })
-}
-
-
-
-
 
 function authorize (req,res,next){
     if (!req.headers.authorization) {
@@ -63,17 +32,6 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
 
 
   router.post('/signup',(req,res)=>{
-       /* const user = findUsers()
-      
-      const info=findInfo()
-      
-    const newUser={
-          id:uuidv4(),
-        username,
-        name,
-        password: bcrypt.hashSync(password,saltRounds)
-      }
-      */
      const {username,name,password}=req.body
      checker=[]
       Users
@@ -90,11 +48,6 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
             username&&
             name&&
             password){
-            /*user.push(newUser)
-            info.push({username:newUser.username,name:newUser.name,stories:[],edits:[]})
-            fs.writeFileSync('./data/userInfo.json',JSON.stringify(info))
-            fs.writeFileSync('./data/users.json',JSON.stringify(user))
-            res.status(200).json(newUser)*/
             new Users({
               username:username,
               name:name,
@@ -118,30 +71,9 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
       
   });
 
-  function checkLogin(username,password){
-    const user=findUsers()
-    for(let i=0;i<user.length;i++){
-        index=null;
-        if(user[i].username===username&&bcrypt.compareSync(password,user[i].password)){
-            index=i
-            return index
-        }
-    }
-}
-
-function findName(username,password){
-    const user=findUsers()
-    for(let i=0;i<user.length;i++){
-    if(user[i].username===username&&bcrypt.compareSync(password,user[i].password)){
-        return user[i].name
-    }
-}
-}
 
 router.post('/login',(req,res)=>{
     const {username,password}=req.body
-    /*const loginCheck=checkLogin(username,password)
-    const name=findName(username,password)*/
 
     Users
       .fetchAll({categories:['username','password','name']})

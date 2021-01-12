@@ -22,9 +22,9 @@ class Edit extends Component{
         })})}
     axios.get('http://localhost:8080/'+link).then((response)=>{
         this.setState({
-           title:response.data[0].title,
-           username:response.data[0].username,
-           text:response.data[0].text
+           title:response.data.title,
+           username:response.data.username,
+           text:response.data.text
         })
     })
    

@@ -55,7 +55,7 @@ class Search extends Component{
                 </div>
             )
         }
-        else if(this.state.searchQuery&&(!this.state.searchQuery[0].length&&!this.state.searchQuery[1].length)){
+        else if(!this.state.searchUsers.length&&!this.state.searchStories.length){
             return(
             <div className="search">
                 <Nav history={this.props}/>

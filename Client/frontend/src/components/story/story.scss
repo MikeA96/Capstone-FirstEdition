@@ -89,6 +89,13 @@
                 display:flex;
                 flex-direction:column;
                 align-items:center;
+                .comments__button{
+                    border-radius:20px;
+                height:30px;
+                border:0;
+                background-color:$bright-teal;
+                margin-bottom:10px;
+                }
                 .comments__title-container{
                     display:flex;
                     justify-content:space-between;

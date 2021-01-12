@@ -48,7 +48,7 @@ class Home extends Component{
         event.preventDefault();
         axios.get(`http://localhost:8080/filter/${event.target.filter.value.toLowerCase()}`).then((response)=>{
             this.setState({
-                stories:response.data
+                stories:response.data.reverse()
             })
         }).then(event.target.reset())
     }
@@ -56,7 +56,7 @@ class Home extends Component{
     handleReset=()=>{
         axios.get('http://localhost:8080/story').then((response)=>{
             this.setState({
-                stories:response.data
+                stories:response.data.reverse()
             })
         })
     }
@@ -89,8 +89,7 @@ class Home extends Component{
                         <p className="home__genre">{story.genre}</p>
                         </div>
                         <div className="home__info-container">
-                            <p className="home__likes">{story.likes} likes</p>
-                           {/* <p className="home__comments">{story.comments.length} comments</p>*/}
+                            <p className="home__likes">{story.liked} likes</p>
                         </div>
                     </div>
                     
