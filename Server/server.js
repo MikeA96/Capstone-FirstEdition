@@ -13,6 +13,7 @@ const JWT_SECRET=process.env.JWT_SECRET
 const port= process.env.PORT||8080;
 const mysql=require('mysql')
 const knex = require('./knexfile')
+const path=require('path')
 
 let connection;
 // make connection
@@ -57,4 +58,3 @@ connection.connect(err => {
   
   // Export connection for our ORM to use.
   module.exports = connection;
-  
