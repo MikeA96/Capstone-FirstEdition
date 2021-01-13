@@ -8,6 +8,7 @@ exports.up = function(knex) {
       table.string("genre").notNullable();
       table.json("comments").defaultTo([]).notNullable();
       table.json("likes");
+      table.integer("liked").defaultTo(0);
       table.timestamp("created").defaultTo(knex.fn.now());
   })
 };

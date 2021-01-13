@@ -5,8 +5,7 @@ exports.up = function(knex) {
       table.string("name").notNullable();
       table.string('info');
       table.string("content");
-      table.json("stories").notNullable();
-      table.json("edits").notNullable();
+      table.integer("editLikes").defaultTo(0);
   })
 };
 

@@ -6,7 +6,8 @@ exports.up = function(knex) {
       table.string("title").notNullable();
       table.longtext("text").notNullable();
       table.string("editor").notNullable();
-      table.integer("likes").notNullable();
+      table.json("likes");
+      table.integer(editorLikes).defaultTo(0);
       table.timestamp("created").defaultTo(knex.fn.now())
   })
 };
