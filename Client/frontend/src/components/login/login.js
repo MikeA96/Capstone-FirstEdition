@@ -9,7 +9,7 @@ class Login extends Component{
 
     handleLogin=(event)=>{
         event.preventDefault();
-        axios.post('/login',{
+        axios.post('/api/login',{
             username:event.target.username.value,
             password:event.target.password.value
         }).then(response=>{

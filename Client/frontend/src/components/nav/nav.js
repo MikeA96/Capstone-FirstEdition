@@ -11,7 +11,7 @@ class Nav extends Component{
     componentDidMount(){
     const authorize=sessionStorage.getItem('authToken')
     if(authorize!==null){
-    axios.get('/profile',{
+    axios.get('/api/profile',{
         headers:{authorization:`Bearer ${authorize}`}
     }).then(response =>this.setState({
         username:response.data.username,

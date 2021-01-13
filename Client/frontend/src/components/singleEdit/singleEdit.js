@@ -18,13 +18,13 @@ class SingleEdit extends Component{
         const edited=this.props.match.params.edit
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('/profile',{
+        axios.get('/api/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then((response) =>{
             this.setState({
             username:response.data.username
         })})}
-        axios.all([axios.get(`/${main}`),axios.get(`/edited/${edited}`)]).then(
+        axios.all([axios.get(`/api/${main}`),axios.get(`/api/edited/${edited}`)]).then(
             (response)=>{
                 this.setState({
                     story:response[0].data.text,
@@ -37,7 +37,7 @@ class SingleEdit extends Component{
     }
 handleLike=(event)=>{
 event.preventDefault();
-axios.post(`/edit/like/${this.state.editId}`,{
+axios.post(`/api/edit/like/${this.state.editId}`,{
     username:this.state.username
 }).then((response)=>{
     this.setState({
@@ -47,7 +47,7 @@ axios.post(`/edit/like/${this.state.editId}`,{
 }
 handleUnlike=(event)=>{
     event.preventDefault();
-    axios.delete(`/edit/like/${this.state.editId}`,{
+    axios.delete(`/api/edit/like/${this.state.editId}`,{
         username:this.state.username
     }).then((response)=>{
         this.setState({

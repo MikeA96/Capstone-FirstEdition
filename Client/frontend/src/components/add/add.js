@@ -11,7 +11,7 @@ class Add extends Component {
     componentDidMount(){
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('/profile',{
+        axios.get('/api/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>this.setState({
             username:response.data.username,
@@ -20,7 +20,7 @@ class Add extends Component {
 
     handleSubmit=(event)=>{
         event.preventDefault();
-        axios.post('/story',{
+        axios.post('/api/story',{
             username:this.state.username,
             title:event.target.title.value,
             text:event.target.text.value,

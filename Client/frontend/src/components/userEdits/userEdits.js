@@ -13,18 +13,18 @@ class UserEdits extends Component {
     componentDidMount(){
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('/profile',{
+        axios.get('/api/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>{
             this.setState({
             username:response.data.username
         })
-        axios.get(`/story/${response.data.username}`).then((response)=>{
+        axios.get(`/api/story/${response.data.username}`).then((response)=>{
             this.setState({
                 userStories:response.data
             })
         })
-        axios.get(`/edit/${response.data.username}`).then(
+        axios.get(`/api/edit/${response.data.username}`).then(
             (response)=>{
                 this.setState({
                     edits:response.data

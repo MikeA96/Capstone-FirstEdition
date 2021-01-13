@@ -14,14 +14,14 @@ class Profile extends Component{
     componentDidMount(){
         const authorize=sessionStorage.getItem('authToken')
         if(authorize!==null){
-        axios.get('/profile',{
+        axios.get('/api/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then((response) =>{
             this.setState({
             username:response.data.username,
             name:response.data.findName
         })
-        axios.all([axios.get(`/story/${response.data.username}`),axios.get(`/edit/${response.data.username}`)]).then(
+        axios.all([axios.get(`/api/story/${response.data.username}`),axios.get(`/api/edit/${response.data.username}`)]).then(
             (response)=>{ 
                 this.setState({
                     stories:response[0].data,
@@ -34,11 +34,11 @@ class Profile extends Component{
 
     handleDelete=(event)=>{
         event.preventDefault();
-        axios.delete(`/story/${event.target.story.value}`,{
+        axios.delete(`/api/story/${event.target.story.value}`,{
             data:{
             username:this.state.username
             }
-        }).then(setTimeout(()=>{axios.get(`/story/${this.state.username}`).then((response)=>{
+        }).then(setTimeout(()=>{axios.get(`/api/story/${this.state.username}`).then((response)=>{
             this.setState({
                 stories:response.data
             })

@@ -12,7 +12,7 @@ class EditProfile extends Component{
     componentDidMount(){
     const authorize=sessionStorage.getItem('authToken')
     if(authorize!==null){
-        axios.get('/profile',{
+        axios.get('/api/profile',{
             headers:{authorization:`Bearer ${authorize}`}
         }).then(response =>this.setState({
             username:response.data.username,
@@ -21,7 +21,7 @@ class EditProfile extends Component{
     }
 handleSubmit=(event)=>{
     event.preventDefault();
-    axios.put('/user',{
+    axios.put('/api/user',{
        username:this.state.username ,
        name:this.state.name,
        info:event.target.info.value,
