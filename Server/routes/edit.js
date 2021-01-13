@@ -12,7 +12,7 @@ const UserInfo =require('../models/userInfo');
 
 
 
-router.post('/edit',(req,res)=>{
+router.post('/api/edit',(req,res)=>{
    
     const main=req.body
     const newId=uuidv4()
@@ -33,7 +33,7 @@ router.post('/edit',(req,res)=>{
        else{res.json({failure:true})}
 
 })
-router.post('/edit/like/:id',(req,res)=>{
+router.post('/api/edit/like/:id',(req,res)=>{
     Edits
     .where({id:req.params.id})
     .fetch()
@@ -70,7 +70,7 @@ router.post('/edit/like/:id',(req,res)=>{
         else{res.status(200).json({failure:true})}
     })
 })
-router.delete('/edit/like/:id',(req,res)=>{
+router.delete('/api/edit/like/:id',(req,res)=>{
 Edits
 .where({id:req.params.id})
 .fetch()
@@ -105,7 +105,7 @@ Edits
 })
 })
 
-router.get('/edit/:user',(req,res)=>{
+router.get('/api/edit/:user',(req,res)=>{
    
     Edits
     .where({username:req.params.user})
@@ -116,7 +116,7 @@ router.get('/edit/:user',(req,res)=>{
 
 })
 
-router.get('/edit/:user/:story',(req,res)=>{
+router.get('/api/edit/:user/:story',(req,res)=>{
 
     Edits
     .where({username:req.params.user}&&{title:req.params.story})
@@ -146,7 +146,7 @@ router.get('/edit/:user/:story',(req,res)=>{
     )
 })
 
-router.get('/edited/:id',(req,res)=>{
+router.get('/api/edited/:id',(req,res)=>{
    Edits
    .where({id:req.params.id})
    .fetch()
@@ -155,7 +155,7 @@ router.get('/edited/:id',(req,res)=>{
    })
 })
 
-router.delete('/edit/:id',(req,res)=>{
+router.delete('/api/edit/:id',(req,res)=>{
 const {username}=req.body
 Edits
 .where({id:req.params.id})

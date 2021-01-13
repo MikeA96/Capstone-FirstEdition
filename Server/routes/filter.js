@@ -8,7 +8,7 @@ const Stories =require('../models/stories')
 const UserInfo =require('../models/userInfo');
 
 
-router.get('/search/:search',(req,res)=>{
+router.get('/api/search/:search',(req,res)=>{
 
 find=req.params.search
 mainSearch=[]
@@ -34,7 +34,7 @@ orWhere:{title:find}
 })
 })
 
-router.get('/filter/:genre',(req,res)=>{
+router.get('/api/filter/:genre',(req,res)=>{
    
      Stories
      .where({genre:req.params.genre})

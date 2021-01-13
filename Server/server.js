@@ -23,15 +23,7 @@ if (process.env.JAWSDB_URL) {
 
   connection = mysql.createConnection(knex.development);
 }
-//if (process.env.NODE_ENV === "production") {
-    // Set static folder
-    app.use(express.static("../Client/frontend/build"));
-  
-    app.get("*", (req, res) => {
-        console.log("test")
-      res.sendFile(path.join(__dirname, "../Client/frontend", "build", "index.html"));
-    });
- // }
+
 
 
 const getStory=require('./routes/story')
@@ -47,6 +39,16 @@ app.use('/',getStory)
 app.use('/',updateUser)
 app.use('/',editStory)
 app.use('/',filter)
+
+//if (process.env.NODE_ENV === "production") {
+    // Set static folder
+    app.use(express.static("../Client/frontend/build"));
+  
+    app.get("*", (req, res) => {
+        console.log("test")
+      res.sendFile(path.join(__dirname, "../Client/frontend", "build", "index.html"));
+    });
+ // }
 
 app.listen(port,()=>{
     console.log("Listening on port " + port)

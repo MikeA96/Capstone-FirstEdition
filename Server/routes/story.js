@@ -10,7 +10,7 @@ const Edits= require('../models/edits')
 
 
 
-router.get('/story', (_req,res)=>{
+router.get('/api/story', (_req,res)=>{
    Stories
    .query('orderBy','liked')
    .fetchAll()
@@ -18,7 +18,7 @@ router.get('/story', (_req,res)=>{
     res.status(200).json(story)})
 })
 
-router.get('/story/:user',(req,res)=>{
+router.get('/api/story/:user',(req,res)=>{
   
 Stories
 .where({username:req.params.user})
@@ -29,7 +29,7 @@ Stories
 
 })
 
-router.get('/:story',(req,res)=>{
+router.get('/api/:story',(req,res)=>{
   
     Stories
     .where({id:req.params.story})
@@ -39,7 +39,7 @@ router.get('/:story',(req,res)=>{
     })
 })
 
-router.get('/findStory/:username/:title',(req,res)=>{
+router.get('/api/findStory/:username/:title',(req,res)=>{
   
     Stories
     .where({username:req.params.username}&&{title:req.params.title})
@@ -49,7 +49,7 @@ router.get('/findStory/:username/:title',(req,res)=>{
     })
 })
 
-router.post('/story',(req,res)=>{
+router.post('/api/story',(req,res)=>{
   
     if(req.body.title.length &&req.body.text.length&&req.body.genre.length){
      const newId=uuidv4()
@@ -68,7 +68,7 @@ router.post('/story',(req,res)=>{
     else{res.json({failure:true})}
 })
 
-router.delete('/like/:id',(req,res)=>{
+router.delete('/api/like/:id',(req,res)=>{
     Stories
     .where({id:req.params.id})
     .fetch()
@@ -87,7 +87,7 @@ router.delete('/like/:id',(req,res)=>{
     })
 })
 
-router.post('/like/:id',(req,res)=>{
+router.post('/api/like/:id',(req,res)=>{
   
     Stories
     .where({id:req.params.id})
@@ -120,7 +120,7 @@ router.post('/like/:id',(req,res)=>{
     
 })
 
-router.get('/comments/:id',(req,res)=>{
+router.get('/api/comments/:id',(req,res)=>{
 Comments
 .where({storyID:req.params.id})
 .query('orderBy','likes')
@@ -129,7 +129,7 @@ Comments
     res.status(200).json(comment)
 })
 })
-router.post('/comment/like/:id',(req,res)=>{
+router.post('/api/comment/like/:id',(req,res)=>{
 Comments
 .where({id:req.params.id})
 .fetch()
@@ -152,7 +152,7 @@ Comments
 })
 })
 
-router.delete('/comment/like/:id',(req,res)=>{
+router.delete('/api/comment/like/:id',(req,res)=>{
     Comments
     .where({id:req.params.id})
     .fetch()
@@ -170,7 +170,7 @@ router.delete('/comment/like/:id',(req,res)=>{
     })
 })
 
-router.post('/comment/:id',(req,res)=>{
+router.post('/api/comment/:id',(req,res)=>{
    
     if(req.body.text.length){
         new Comments({
@@ -184,7 +184,7 @@ router.post('/comment/:id',(req,res)=>{
         .then()
     }
 })
-router.delete('/story/:id',(req,res)=>{
+router.delete('/api/story/:id',(req,res)=>{
     const {username}=req.body
     Stories
     .where({id:req.params.id})
@@ -216,7 +216,7 @@ router.delete('/story/:id',(req,res)=>{
     })
 })
 
-router.delete('/comments/:id',(req,res)=>{
+router.delete('/api/comments/:id',(req,res)=>{
     const {username}=req.body
     Comments
     .where({id:req.params.id})

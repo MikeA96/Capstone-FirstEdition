@@ -31,7 +31,7 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
 }
 
 
-  router.post('/signup',(req,res)=>{
+  router.post('/api/signup',(req,res)=>{
      const {username,name,password}=req.body
      checker=[]
       Users
@@ -57,9 +57,7 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
           .save(null,{method:'insert'});
           new UserInfo({
               username:username,
-              name:name,
-              stories:"[]",
-              edits:"[]"
+              name:name
           })
           .save(null,{method:'insert'})
           .then(res.status(200).json({success:true}))
@@ -75,7 +73,7 @@ jwt.verify(token, JWT_SECRET, (err, decoded) => {
   });
 
 
-router.post('/login',(req,res)=>{
+router.post('/api/login',(req,res)=>{
     const {username,password}=req.body
 
     Users
@@ -103,7 +101,7 @@ router.post('/login',(req,res)=>{
 })
 })
 
-router.get('/profile', authorize, (req, res) => {
+router.get('/api/profile', authorize, (req, res) => {
     res.json(req.jwtDecoded);
   })
   module.exports=router

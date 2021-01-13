@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const UserInfo = require('../models/userInfo');
 
 
-router.put('/user',(req,res)=>{
+router.put('/api/user',(req,res)=>{
    
 
     UserInfo
@@ -21,7 +21,7 @@ router.put('/user',(req,res)=>{
         })
 })
 
-router.get('/user/:user',(req,res)=>{
+router.get('/api/user/:user',(req,res)=>{
 
 UserInfo
 .where({username:req.params.user})
