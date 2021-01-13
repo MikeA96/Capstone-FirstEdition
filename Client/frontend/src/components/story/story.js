@@ -285,6 +285,7 @@ comments=()=>{
                     <button type="submit" className="story__comment-button">Submit</button>
                 </form>
                 <div className="story__comments">{this.comments()}</div>
+                <Link to={'/edit/'+this.state.story.id} className="story__edit-link"><button className="story__edit-button">Edit</button></Link>
             </div>
             </div>
         )
